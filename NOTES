@@ -1,0 +1,65 @@
+
+1. Open openHaystack app
+2. Create new peripheral
+3. Copy Adv key
+4. Open terminal in this project
+4. cd apps/openhaystack-alternative
+5. Patch (https://github.com/acalatrava/openhaystack-firmware/tree/main/apps/openhaystack-alternative)
+    $ NRF_MODEL=nrf51 ADV_KEY_BASE64=xlkHVx1T1bdCl53HsAmE2VSmgpU/5di/5MAccg== make patch
+
+6. Flash...  https://github.com/seemoo-lab/openhaystack/issues/35#issuecomment-828338751
+    1. Connect STLink & PCB
+        See 2043319863.jpg in this folder dor wiring diagram
+    2. Open two terminals
+    3. In terminal 1 run (updated from above link - https://github.com/seemoo-lab/openhaystack/issues/35#issuecomment-828338751)
+        $ openocd -f /usr/local/share/openocd/scripts/interface/stlink-v2.cfg -f /usr/local/share/openocd/scripts/target/nrf51.cfg
+    4. In terminal 2 run
+        1. $ telnet localhost 4444
+        2. $ halt
+        3. Optional: Backup existing NRF Firmware (confirms connection)
+            $ dump_image ./Documents/Personal/ESP/Projects/nrf51-firmware/holy-iot-1RU5SJ.bin 0 0x40000
+        4. Erase existing flash: 
+            $ nrf51 mass_erase
+        5. Verify new firmware file: 
+            $ program ./Documents/Personal/ESP/Projects/openhaystack-alternative-firmware/apps/openhaystack-alternative/compiled/devices/nrf51_firmware_1RU5SJ.bin verify  
+        6. Program the firmware: 
+            above command but remove verify
+        7. Send resume command: 
+            $ resume
+
+
+
+Private key: Openhaystack > device > Copy private key B64
+Advertisement key: Openhaystack > device > Copy Advertisement key > Base64
+Hashed adv key: Openhaystack > device > Copy key ID (Base64)
+
+Keys
+NRF51-1 (Katie)
+Pvt key: nPoyYAE681IJyWNKllKW4av1x05j6I5NK4AlaA==
+Adv key: xlkHVx1T1bdCl53HsAmE2VSmgpU/5di/5MAccg==
+Hash key: oFzKs+tm5kRMlrp6b9Z3qoGS1w2SdrHWkWbN44zINyY=
+
+NRF51-2 (Michaela)
+Pvt key: vnAlpatGFiO+cg9HCwKmXVBU/mevH6EfOZD2Rw==
+Adv key: usnPNKqm14Tb5gRl+DMZqQuM3oSpyp32E3BDpg==
+Hash key: PWuJI7FSes7amRQ1KAv+ZSnfk0Ffqmaze4AFKb4lo1k=
+
+NRF51-3 (Vanguard)
+Pvt key: +JiagQ88PLNa96bzMpg1Jxjpjxsbl+xgVjdx1A==
+Adv key: 7e7+taunQGDS//sXL5k2BsBmvOpAgIdkD5nHTg==
+Hash key: bNdNx1/qGvhN3W4+asJh6LGs+fQmdUqsXTo0pCQq3GY=
+
+NRF51-4
+Pvt key: PnzYibFWtWYAZ8dJDItCSMSzCpoBz23xIZ4BOg==
+Adv key: /DpnijnIJwRVCaxOSqtM6qRqZ7lPJzCPwQVOcQ==
+Hash key: fZEej3QonggrIznqVSxAWzzI60pmKXb2acumyGH9BtY=
+
+NRF51-5
+Pvt key: vjyeUQf6+dZVOxa1A5X3Kpw2zrMvoa5OiCRjgQ==
+Adv key: iHicy2YibOX3+rInUUw2UUvyw4kbfGwVsHp7jA==
+Hash key: uVjbZ0CGPtYzVCwRNT0WnU8vbwI/XTnIc0my5YUrAc0=
+
+
+NRF_MODEL=nrf51 ADV_KEY_BASE64=iHicy2YibOX3+rInUUw2UUvyw4kbfGwVsHp7jA== make patch
+
+
